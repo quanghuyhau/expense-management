@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:qlct/generated/l10n.dart';
 import 'package:qlct/presentation/cubit/auth/auth_cubit.dart';
 import 'package:qlct/presentation/cubit/transaction/transaction_cubit.dart';
 import 'package:qlct/domain/usecases/get_transactions_usecase.dart';
@@ -9,14 +10,13 @@ import 'package:qlct/data/repositories/transaction_repository.dart';
 import 'package:qlct/data/repositories/auth_repository.dart';
 import 'package:qlct/domain/usecases/auth_usecase.dart';
 import 'package:qlct/presentation/screens/login/login_screen.dart';
-
 import 'domain/usecases/add_transactions_usecase.dart';
 import 'domain/usecases/delete_transactions_usecase.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   final transactionRepository = TransactionRepository();
 
   runApp(MyApp(transactionRepository: transactionRepository));
@@ -46,6 +46,13 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
         home: LoginScreen(),
       ),
     );
